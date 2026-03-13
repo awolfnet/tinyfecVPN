@@ -68,10 +68,10 @@ Assume your server ip is `44.55.66.77`, you have a service listening on udp/tcp 
 
 ```
 # Run at server side:
-./tinyvpn -s -l0.0.0.0:4096 -f20:10 -k "passwd" --sub-net 10.22.22.0
+./tinyvpn -s -l0.0.0.0:4096 -f20:10 -k "passwd" --local-address 192.168.0.1 --remote-address 192.168.0.2
 
 # Run at client side
-./tinyvpn -c -r44.55.66.77:4096 -f20:10 -k "passwd" --sub-net 10.22.22.0
+./tinyvpn -c -r44.55.66.77:4096 -f20:10 -k "passwd" --local-address 192.168.0.2 --remote-address 192.168.0.1
 ```
 
 Now, use `10.22.22.1:7777` to connect to your service,all traffic will be improved by FEC. If you ping `10.22.22.1`, you will get ping reply.
@@ -109,8 +109,9 @@ usage:
 common options, must be same on both sides:
     -k,--key              <string>        key for simple xor encryption. if not set, xor is disabled
 main options:
-    --sub-net             <number>        specify sub-net, for example: 192.168.1.0 , default: 10.22.22.0
-    --tun-dev             <number>        sepcify tun device name, for example: tun10, default: a random name such as tun987
+    --local-address       <ip-address>    local address for the tunnel, for example: 192.168.1.1
+    --remote-address      <ip-address>    remote address for the tunnel, for example: 192.168.1.2
+    --tun-dev             <string>        sepcify tun device name, for example: tun10, default: a random name such as tun987
     -f,--fec              x:y             forward error correction, send y redundant packets for every x packets
     --timeout             <number>        how long could a packet be held in queue before doing fec, unit: ms, default: 8ms
     --mode                <number>        fec-mode,available values: 0, 1; 0 cost less bandwidth, 1 cost less latency;default: 0)
@@ -162,11 +163,13 @@ Specify a tun device name to use. Example: `--tun-dev tun100`.
 
 If not set,tinyfecVPN will randomly chose a name,such as `tun987`.
 
-##### `--sub-net`
+##### `--local-address`
 
-Specify the sub-net of VPN. Example: `--sub-net 10.10.10.0`, in this way,server IP will be `10.10.10.1`,client IP will be `10.10.10.2`.
+Specify the local address of the VPN tunnel. Example: `--local-address 192.168.0.1`
 
-The last number of option should be zero, for exmaple `10.10.10.123` is invalild, and will be corrected automatically to `10.10.10.0`.
+##### `--remote-address`
+
+Specify the remote address of the VPN tunnel. Example: `--remote-address 192.168.0.2`
 
 ##### `--keep-reconnect`
 
