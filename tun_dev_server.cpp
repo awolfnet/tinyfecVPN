@@ -212,7 +212,7 @@ int tun_dev_server_event_loop() {
     assert(tun_fd > 0);
 
     assert(new_listen_socket2(local_listen_fd, local_addr) == 0);
-    assert(set_tun(tun_dev, htonl((ntohl(local_address_uint32))), htonl((ntohl(remote_address_uint32)), tun_mtu) == 0);
+    assert(set_tun(tun_dev, htonl(ntohl(local_address_uint32)), htonl(ntohl(remote_address_uint32)), tun_mtu) == 0);
 
     udp_dest.cook = 1;
     udp_dest.type = type_fd_addr;

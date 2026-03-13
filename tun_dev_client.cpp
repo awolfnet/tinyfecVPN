@@ -188,7 +188,7 @@ int tun_dev_client_event_loop() {
     assert(new_connected_socket2(remote_fd, remote_addr, out_addr, out_interface) == 0);
     remote_fd64 = fd_manager.create(remote_fd);
 
-    assert(set_tun(tun_dev, htonl((ntohl(local_address_uint32))), htonl((ntohl(remote_address_uint32)), tun_mtu) == 0);
+    assert(set_tun(tun_dev, htonl(ntohl(local_address_uint32)), htonl(ntohl(remote_address_uint32)), tun_mtu) == 0);
 
     tun_dest.type = type_write_fd;
     tun_dest.inner.fd = tun_fd;
